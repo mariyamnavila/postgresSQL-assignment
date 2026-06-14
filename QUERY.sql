@@ -233,3 +233,25 @@ SELECT
 FROM bookings
     INNER JOIN matches USING (match_id)
     INNER JOIN users USING (user_id);
+
+SELECT user_id, full_name, booking_id
+FROM users
+    LEFT JOIN bookings USING (user_id);
+
+SELECT booking_id, match_id, total_cost
+FROM bookings
+WHERE
+    total_cost > (
+        SELECT AVG(total_cost)
+        FROM bookings
+    );
+
+SELECT
+    match_id,
+    fixture,
+    base_ticket_price
+FROM matches
+ORDER BY base_ticket_price DESC
+OFFSET
+    1
+LIMIT 2;
