@@ -197,3 +197,39 @@ VALUES (
         'Pending',
         120.00
     );
+
+SELECT
+    match_id,
+    fixture,
+    base_ticket_price
+FROM matches
+WHERE
+    match_status = 'Available'
+    AND tournament_category = 'Champions League';
+
+SELECT user_id, full_name, email
+FROM users
+WHERE
+    full_name ILIKE 'tanvir%'
+    OR full_name ILIKE '%haque%';
+
+SELECT
+    booking_id,
+    user_id,
+    match_id,
+    COALESCE(
+        payment_status,
+        'Action Required'
+    ) AS systematic_status
+FROM bookings
+WHERE
+    payment_status IS NULL;
+
+SELECT
+    booking_id,
+    full_name,
+    fixture,
+    total_cost
+FROM bookings
+    INNER JOIN matches USING (match_id)
+    INNER JOIN users USING (user_id);
